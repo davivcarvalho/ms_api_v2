@@ -28,7 +28,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          cd ~/api
           npm i --only=prod
           npm run build
           pm2 start pm2.config.js --env production
