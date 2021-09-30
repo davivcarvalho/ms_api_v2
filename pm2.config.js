@@ -1,9 +1,11 @@
 module.exports = {
-  apps : [{
-    name   : "api",
-    script : "./dist/main.js"
-  }],
-  env_production: {
-    NODE_ENV: "production"
- },
+  apps: [
+    {
+      name: 'api',
+      script: './dist/main.js',
+      env: {
+        NODE_ENV: 'production'
+      }
+    }
+  ]
 }
