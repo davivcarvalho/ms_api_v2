@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './useCases/Auth/auth.module'
@@ -10,17 +10,24 @@ import { UsersModule } from './useCases/Users/users.module'
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'api',
-      autoLoadEntities: true,
-      synchronize: true
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_SCHEMA'),
+        autoLoadEntities: true,
+        synchronize: true
+      }),
+      inject: [ConfigService]
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: process.env.NODE_ENV !== 'production' ? '.development.env' : '.env'
+    }),
     EventEmitterModule.forRoot(),
     AuthModule,
     RequestsModule,
