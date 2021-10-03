@@ -6,7 +6,7 @@ export class CreateRequestDto {
   title: string
 
   @IsString()
-  @Length(5)
+  @Length(5, 500)
   description: string
 
   @IsNumber()

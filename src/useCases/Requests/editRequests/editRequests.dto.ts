@@ -3,7 +3,7 @@ import { RequestStatus } from 'src/entities/request.entity'
 
 export class EditRequestsDto {
   @IsString()
-  @Length(5, 100)
+  @Length(5, 500)
   @IsOptional()
   description?: string
 
