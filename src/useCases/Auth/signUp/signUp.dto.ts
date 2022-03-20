@@ -3,10 +3,13 @@ import { Role } from 'src/entities/user.entity'
 
 export class SignUpDto {
   @IsString()
-  idToken: string
+  username: string
 
-  @IsEmail()
-  email: string
+  @IsString()
+  name: string
+
+  @IsString()
+  password: string
 
   @IsString()
   @IsEnum(Role)

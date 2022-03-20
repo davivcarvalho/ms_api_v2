@@ -3,46 +3,41 @@ import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from 'src/entities/user.entity'
 import { ChatService } from 'src/providers/chat.service'
-import { GoogleOAuthService } from 'src/providers/googleOAuth.service'
+import { HashService } from 'src/providers/hash.service'
 import { Repository } from 'typeorm'
 import { SignUpDto } from './signUp.dto'
 
 @Injectable()
 export class SignUpService {
   constructor(
-    private googleOAuthService: GoogleOAuthService,
     @InjectRepository(User) private usersRepository: Repository<User>,
-    @Inject(ChatService) private chatService: ClientProxy
+    @Inject(ChatService) private chatService: ClientProxy,
+    private hashService: HashService
   ) {}
 
   async execute(data: SignUpDto) {
-    await this.checkIfHasUser(data.email)
-
-    const oAuthResult = await this.googleOAuthService.checkToken(data.idToken)
-
-    if (oAuthResult.email !== data.email) throw new UnauthorizedException('Invalid token')
+    await this.checkIfHasUser(data.username)
 
     const user = this.usersRepository.create({
-      email: data.email,
+      username: data.username,
+      name: data.name,
       role: data.role,
-      avatar: oAuthResult.picture,
-      name: oAuthResult.name
+      avatar: `https://ui-avatars.com/api/?background=random&name=${data.name.replace(' ', '+')}`,
+      password: await this.hashService.encrypt(data.password)
     })
-
     await this.usersRepository.save(user)
 
     this.chatService.emit('user_created', {
       id: user.id,
-      name: oAuthResult.name,
-      avatar: oAuthResult.picture,
-      email: data.email
+      name: user.name,
+      avatar: user.avatar
     })
 
     return user
   }
 
-  async checkIfHasUser(email: string) {
-    const user = await this.usersRepository.findOne({ email })
+  async checkIfHasUser(username: string) {
+    const user = await this.usersRepository.findOne({ username })
 
     if (user) throw new HttpException('User already exists!', 500)
   }

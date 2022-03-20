@@ -14,13 +14,16 @@ export class User {
 
   @Index({ unique: true })
   @Column()
-  email: string
+  username: string
 
   @Column()
   name: string
 
   @Column()
   avatar: string
+
+  @Column()
+  password: string
 
   @Column({ nullable: true })
   expoPushToken: string

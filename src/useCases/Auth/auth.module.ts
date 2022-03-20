@@ -5,6 +5,7 @@ import { Request } from 'src/entities/request.entity'
 import { User } from 'src/entities/user.entity'
 import { ChatServiceProvider } from 'src/providers/chat.service'
 import { GoogleOAuthService } from 'src/providers/googleOAuth.service'
+import { HashService } from 'src/providers/hash.service'
 import { SignInController } from './signIn/signIn.controller'
 import { SignInService } from './signIn/signIn.service'
 import { SignUpController } from './signUp/signUp.controller'
@@ -13,6 +14,6 @@ import { SignUpService } from './signUp/signUp.service'
 @Module({
   imports: [TypeOrmModule.forFeature([User, Request, Equipment])],
   controllers: [SignInController, SignUpController],
-  providers: [SignInService, SignUpService, GoogleOAuthService, ChatServiceProvider]
+  providers: [SignInService, SignUpService, GoogleOAuthService, ChatServiceProvider, HashService]
 })
 export class AuthModule {}
