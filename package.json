@@ -21,6 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "tunnel": "npx localtunnel --port 3000 --subdomain api--apr"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@nestjs/common": "^8.0.6",
     "@nestjs/config": "^1.0.1",
