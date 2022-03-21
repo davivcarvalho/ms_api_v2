@@ -20,7 +20,8 @@ import { UsersModule } from './useCases/Users/users.module'
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_SCHEMA'),
         autoLoadEntities: true,
-        synchronize: true
+        synchronize: true,
+        ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
       }),
       inject: [ConfigService]
     }),
