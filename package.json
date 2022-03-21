@@ -40,6 +40,7 @@
     "google-auth-library": "^7.6.2",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.0",
+    "pg": "^8.7.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.3.0",
