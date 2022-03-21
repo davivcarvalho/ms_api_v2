@@ -4,6 +4,6 @@ export class SignInDto {
   @IsString()
   username: string
 
-  @IsEmail()
+  @IsString()
   password: string
 }

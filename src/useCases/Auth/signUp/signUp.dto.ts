@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsString } from 'class-validator'
+import { IsEnum, IsString } from 'class-validator'
 import { Role } from 'src/entities/user.entity'
 
 export class SignUpDto {

@@ -30,7 +30,8 @@ export class SignUpService {
     this.chatService.emit('user_created', {
       id: user.id,
       name: user.name,
-      avatar: user.avatar
+      avatar: user.avatar,
+      username: user.username
     })
 
     return user
