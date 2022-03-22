@@ -9,6 +9,7 @@ export const ChatServiceProvider = {
     return ClientProxyFactory.create({
       transport: Transport.TCP,
       options: {
+        port: configService.get('CHAT_SERVICE_PORT'),
         host: configService.get('CHAT_SERVICE_HOST')
       }
     })
