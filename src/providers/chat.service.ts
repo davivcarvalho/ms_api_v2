@@ -1,20 +1,32 @@
-import { ConfigService } from '@nestjs/config'
-import { ClientProxyFactory, Transport } from '@nestjs/microservices'
+import { Injectable } from '@nestjs/common'
+import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices'
 
-export class ChatService {}
+@Injectable()
+export class ChatService {
+  private client: ClientProxy
 
-export const ChatServiceProvider = {
-  provide: ChatService,
-  useFactory: (configService: ConfigService) => {
-    return ClientProxyFactory.create({
-      transport: Transport.TCP,
+  constructor() {
+    this.client = ClientProxyFactory.create({
+      transport: Transport.REDIS,
       options: {
-        port: configService.get('CHAT_SERVICE_PORT'),
-        host: configService.get('CHAT_SERVICE_HOST')
+        url: process.env.REDIS_URL,
+        retryAttempts: 10,
+        retryDelay: 5
       }
     })
-  },
-  inject: [ConfigService]
+  }
+
+  async onApplicationBootstrap() {
+    await this.client.connect()
+  }
+
+  public userCreated(data: any) {
+    return this.client.emit('user_created', data)
+  }
+
+  public userUpdated(data: any) {
+    return this.client.emit('user_updated', data)
+  }
 }
 
 // @MessagePattern('createUser')

@@ -11,7 +11,7 @@ import { SignUpDto } from './signUp.dto'
 export class SignUpService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-    @Inject(ChatService) private chatService: ClientProxy,
+    private chatService: ChatService,
     private hashService: HashService
   ) {}
 
@@ -27,7 +27,7 @@ export class SignUpService {
     })
     await this.usersRepository.save(user)
 
-    this.chatService.emit('user_created', {
+    this.chatService.userCreated({
       id: user.id,
       name: user.name,
       avatar: user.avatar,

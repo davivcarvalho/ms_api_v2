@@ -14,6 +14,15 @@ services:
       - .docker/db:/var/lib/postgresql/data
     networks:
       - db-network
+  redis:
+    image: redislabs/redismod:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes: 
+      - .docker/cache:/data
+
+
 
 networks: 
  db-network:
