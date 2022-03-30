@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { HealthCheckModule } from './providers/health.provider'
 import { AuthModule } from './useCases/Auth/auth.module'
 import { EquipmentsModule } from './useCases/Equipments/equipments.module'
 import { OrdersModule } from './useCases/Orders/orders.module'
@@ -34,7 +35,8 @@ import { UsersModule } from './useCases/Users/users.module'
     RequestsModule,
     EquipmentsModule,
     OrdersModule,
-    UsersModule
+    UsersModule,
+    HealthCheckModule
   ]
 })
 export class AppModule {}

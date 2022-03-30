@@ -8,6 +8,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, errorHttpStatusCode: 422 }))
   app.enableCors()
 
+  app.enableShutdownHooks()
+
   await app.listen(process.env.PORT, '0.0.0.0')
 }
 bootstrap()
