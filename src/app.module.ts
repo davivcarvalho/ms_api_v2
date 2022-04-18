@@ -27,8 +27,7 @@ import { UsersModule } from './useCases/Users/users.module'
       inject: [ConfigService]
     }),
     ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: process.env.NODE_ENV !== 'production' ? '.development.env' : '.env'
+      isGlobal: true
     }),
     EventEmitterModule.forRoot(),
     AuthModule,
